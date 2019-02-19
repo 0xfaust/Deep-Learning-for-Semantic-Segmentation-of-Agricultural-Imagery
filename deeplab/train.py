@@ -18,7 +18,9 @@ See model.py for more details and usage.
 """
 
 import six
+import os
 import tensorflow as tf
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 from deeplab import common
 from deeplab import model
 from deeplab.datasets import segmentation_dataset

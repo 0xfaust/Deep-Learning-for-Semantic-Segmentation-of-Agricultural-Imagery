@@ -5,6 +5,8 @@ set -e
 EXP=$1
 DATASET_DIR=$2
 
+CURRENT_DIR=$(pwd)
+
 # empirical data
 EMPIRICAL_BASE_URL='https://data.4tu.nl/bulk/uuid_884958f5-b868-46e1-b3d8-a0b5d91b02c0'
 EMPIRICAL_FILENAME_DATA='empirical_image_color.zip'
@@ -69,7 +71,6 @@ mkdir -p "${TF_RECORD_DIR}"
 
 cd "${CAPSICUM_ANNUUM_DIR}"
 
-
 # Helper function to download dataset.
 download(){
   local BASE_URL=${1}
@@ -101,7 +102,9 @@ uncompress "${BASE_URL}" "${FILENAME_LABELS}"
 echo "Removing the color map in ground truth annotations..."
 echo "Ground truth directory: $GROUND_TRUTH_DIR"
 
-python ../remove_gt_colormap.py \
+cd "$CURRENT_DIR"
+
+python ./remove_gt_colormap.py \
   --original_gt_folder="$GROUND_TRUTH_DIR" \
 --output_dir="$ANNOTATED_DIR/raw"
 
@@ -134,7 +137,7 @@ elif [[ $EXP == "E" ]]; then
 fi
 
 echo "Converting Capsicum Annuum dataset..."
-cd "${DATASET_DIR}"
+cd "$CURRENT_DIR"
 python ./build_capsicum_annuum_data.py \
   --image_folder="${IMAGE_DIR}" \
   --semantic_segmentation_folder="${ANNOTATED_DIR}" \

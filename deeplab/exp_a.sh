@@ -9,7 +9,7 @@ RESEARCH_DIR=$(pwd)
 CAPSICUM_ANNUUM_DIR="$DATASET_DIR/capsicum_annuum"
 INIT_DIR="$CAPSICUM_ANNUUM_DIR/init_models"
 EXP_DIR="$CAPSICUM_ANNUUM_DIR/exp"
-EXP_ID="$EXP_DIR/c"
+EXP_ID="$EXP_DIR/a"
 TRAIN_LOGDIR="$EXP_ID/train"
 EVAL_LOGDIR="$EXP_ID/eval"
 VIS_LOGDIR="$EXP_ID/vis"
@@ -22,16 +22,8 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 # Run model_test first to make sure the PYTHONPATH is correctly set.
 python deeplab/model_test.py -v
 
-# Copy locally the trained checkpoint as the initial checkpoint.
-TF_INIT_ROOT="http://download.tensorflow.org/models"
-TF_INIT_CKPT="deeplabv3_pascal_train_aug_2018_01_04.tar.gz"
-cd "${INIT_DIR}"
-wget -nd -c "${TF_INIT_ROOT}/${TF_INIT_CKPT}"
-tar -xf "${TF_INIT_CKPT}"
-cd "${RESEARCH_DIR}"
-
-# Train 10 iterations.
-NUM_ITERATIONS=10
+# Train 30000 iterations.
+NUM_ITERATIONS=30000
 python deeplab/train.py \
   --logtostderr \
   --train_split="trainval" \
@@ -43,11 +35,11 @@ python deeplab/train.py \
   --decoder_output_stride=4 \
   --train_crop_size=513 \
   --train_crop_size=513 \
-  --train_batch_size=4 \
+  --train_batch_size=10 \
+  --num-classes 9 \
   --training_number_of_steps="${NUM_ITERATIONS}" \
-  --fine_tune_batch_norm=true \
-  --dataset="capsicum_annuum_c" \
-  --tf_initial_checkpoint="${INIT_DIR}/deeplabv3_pascal_train_aug/model.ckpt" \
+  --fine_tune_batch_norm=false \
+  --dataset="capsicum_annuum_a" \
   --train_logdir="${TRAIN_LOGDIR}" \
   --dataset_dir="${TF_RECORD_DIR}"
 

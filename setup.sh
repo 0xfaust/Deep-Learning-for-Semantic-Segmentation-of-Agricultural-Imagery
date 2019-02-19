@@ -15,7 +15,7 @@ pip2 install --upgrade pip
 pip2 list  # show packages installed within the virtual environment
 
 # install tensorflow
-pip2 install --upgrade tensorflow
+pip2 install --upgrade tensorflow-gpu
 python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))"
 
 sudo apt-get install -y python-pil python-numpy
