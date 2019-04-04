@@ -118,6 +118,16 @@ _CAPSICUM_ANNUUM_A_INFORMATION = DatasetDescriptor(
     ignore_label=255,
 )
 
+_CAPSICUM_ANNUUM_STYLE_INFORMATION = DatasetDescriptor(
+    splits_to_sizes={
+        'train': 125,
+        'trainval': 125,
+        'val': 0,
+    },
+    num_classes=9,
+    ignore_label=255,
+)
+
 _CAPSICUM_ANNUUM_C_INFORMATION = DatasetDescriptor(
     splits_to_sizes={
         'train': 30,
@@ -134,6 +144,7 @@ _DATASETS_INFORMATION = {
     'ade20k': _ADE20K_INFORMATION,
     'capsicum_annuum_a': _CAPSICUM_ANNUUM_A_INFORMATION,
     'capsicum_annuum_c': _CAPSICUM_ANNUUM_C_INFORMATION,
+    'capsicum_annuum_style' : _CAPSICUM_ANNUUM_STYLE_INFORMATION,
 }
 
 # Default file pattern of TFRecord of TensorFlow Example.
